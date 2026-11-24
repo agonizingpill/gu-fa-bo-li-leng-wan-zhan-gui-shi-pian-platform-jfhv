@@ -16,6 +16,12 @@ def list_work_orders(user=Depends(actor)):
         return scan(conn, work_orders)
 
 
+@router.get('/work_orders/{order}/basis')
+def order_basis(order: str, user=Depends(actor)):
+    with transaction() as conn:
+        return service.basis(conn, order)
+
+
 @router.post('/work_orders/book-jig')
 def book_jig(data: BookJig, user=Depends(actor)):
     allow(user, ('operator', 'reviewer'))

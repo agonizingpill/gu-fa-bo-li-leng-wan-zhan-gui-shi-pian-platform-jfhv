@@ -33,6 +33,14 @@
       "label": "冷却弯度 mm"
     },
     {
+      "name": "measured_original",
+      "label": "原始读数 mm"
+    },
+    {
+      "name": "revision_note",
+      "label": "更正说明"
+    },
+    {
       "name": "locked",
       "label": "已确认"
     }
@@ -106,6 +114,58 @@
         "reviewer"
       ],
       "success": "已写入"
+    },
+    {
+      "name": "correct_measured",
+      "label": "更正冷却弯度（保留原读数）",
+      "path": "/coupons/correct-measured",
+      "fields": [
+        {
+          "name": "coupon",
+          "label": "试片编号",
+          "kind": "text",
+          "initial": "GP-12"
+        },
+        {
+          "name": "measured",
+          "label": "更正后弯度 mm",
+          "kind": "float",
+          "initial": 8.1
+        },
+        {
+          "name": "reason",
+          "label": "更正原因",
+          "kind": "text",
+          "initial": "试片见证后复核发现冷却弯度抄错"
+        }
+      ],
+      "help": "仅限已见证试片。更正在同一事务内作废受影响曲线并暂停待打样委托、释放机位；原读数保留在原始读数列与更正流水。",
+      "roles": [
+        "reviewer"
+      ],
+      "success": "已更正并留痕"
+    },
+    {
+      "name": "coupon_revisions",
+      "label": "查询试片更正流水",
+      "path": "/coupons",
+      "method": "get",
+      "keyField": "coupon",
+      "suffix": "/revisions",
+      "fields": [
+        {
+          "name": "coupon",
+          "label": "试片编号",
+          "kind": "text",
+          "initial": "GP-12"
+        }
+      ],
+      "help": "查看该试片每次更正前后的读数、原因、操作人与时间。",
+      "roles": [
+        "operator",
+        "reviewer",
+        "viewer"
+      ]
     }
   ]
 };

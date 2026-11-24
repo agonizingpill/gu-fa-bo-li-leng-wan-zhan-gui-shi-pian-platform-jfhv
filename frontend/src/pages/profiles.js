@@ -31,6 +31,14 @@
     {
       "name": "token",
       "label": "拟合编号"
+    },
+    {
+      "name": "voided",
+      "label": "已失效"
+    },
+    {
+      "name": "void_reason",
+      "label": "失效原因"
     }
   ],
   "layout": "split",
@@ -79,11 +87,29 @@
           "initial": ""
         }
       ],
-      "help": "核对留出误差后签注曲线。一个计算编号只允许签注一次。",
+      "help": "核对留出误差后签注曲线。一个计算编号只允许签注一次。排队期间读数被更正的旧结果会被拒绝签注。",
       "roles": [
         "reviewer"
       ],
       "success": "已写入"
+    },
+    {
+      "name": "void_orphan",
+      "label": "作废来源不清的旧曲线",
+      "path": "/profiles/void-orphan",
+      "fields": [
+        {
+          "name": "profile",
+          "label": "曲线版本",
+          "kind": "text",
+          "initial": "PRO-OLD"
+        }
+      ],
+      "help": "基准试片已无法追溯的旧曲线按失效处理；作废曲线拒绝新委托，依据记录仍保留可查。",
+      "roles": [
+        "reviewer"
+      ],
+      "success": "已作废"
     }
   ]
 };

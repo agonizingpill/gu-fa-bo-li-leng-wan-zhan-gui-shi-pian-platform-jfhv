@@ -12,3 +12,8 @@ class SignProfile(BaseModel):
     model_config = ConfigDict(extra="forbid")
     code: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]
     token: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]
+
+
+class VoidOrphanProfile(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    profile: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]

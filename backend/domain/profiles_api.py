@@ -6,7 +6,7 @@ from core.db import transaction
 from core.records import scan
 from domain import profiles_service as service
 from domain.profiles_model import profiles
-from domain.profiles_schemas import FitCurve, SignProfile
+from domain.profiles_schemas import FitCurve, SignProfile, VoidOrphanProfile
 
 router = APIRouter()
 
@@ -31,4 +31,13 @@ def sign_profile(data: SignProfile, user=Depends(actor)):
     with transaction() as conn:
         output = service.sign_profile(conn, user, data)
         record(conn, user, 'profiles.sign_profile')
+        return output
+
+
+@router.post('/profiles/void-orphan')
+def void_orphan(data: VoidOrphanProfile, user=Depends(actor)):
+    allow(user, ('reviewer',))
+    with transaction() as conn:
+        output = service.void_orphan(conn, user, data)
+        record(conn, user, 'profiles.void_orphan')
         return output

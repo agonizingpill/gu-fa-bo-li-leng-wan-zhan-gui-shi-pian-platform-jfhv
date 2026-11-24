@@ -15,3 +15,10 @@ class RecordCoupon(BaseModel):
 class Witness(BaseModel):
     model_config = ConfigDict(extra="forbid")
     coupon: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]
+
+
+class CorrectCoupon(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    coupon: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]
+    measured: FiniteFloat
+    reason: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)]

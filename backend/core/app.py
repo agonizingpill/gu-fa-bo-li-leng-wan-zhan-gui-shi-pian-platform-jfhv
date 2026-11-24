@@ -8,6 +8,7 @@ from core import auth
 from core.db import metadata, transaction
 from core.config import SEED_DEMO
 from core.middleware import install
+from core.migrate import upgrade
 from core.queueing import broker, view
 from domain.routes import routers
 from scripts.seed_demo import seed
@@ -15,6 +16,7 @@ from scripts.seed_demo import seed
 @asynccontextmanager
 async def lifespan(app):
     from core.db import engine
+    upgrade()
     metadata.create_all(engine)
     if SEED_DEMO:
         try:

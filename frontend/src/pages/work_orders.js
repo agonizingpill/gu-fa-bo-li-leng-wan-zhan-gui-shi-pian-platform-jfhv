@@ -5,7 +5,7 @@
   "title": "试制机位与打样见证",
   "module": "试制工位委托",
   "caption": "试制工位委托",
-  "detail": "每个打样委托锁定唯一机位。拟合弯度或原始目标超过弯模量程时，委托保持未登记。",
+  "detail": "每个打样委托锁定唯一机位。拟合弯度或原始目标超过弯模量程时，委托保持未登记。曲线失效后待打样委托暂停并释放机位，已打样委托仍可查到原依据。",
   "path": "/work_orders",
   "columns": [
     {
@@ -102,6 +102,28 @@
         "reviewer"
       ],
       "success": "已写入"
+    },
+    {
+      "name": "order_basis",
+      "label": "查询委托原依据",
+      "path": "/work_orders",
+      "method": "get",
+      "keyField": "order",
+      "suffix": "/basis",
+      "fields": [
+        {
+          "name": "order",
+          "label": "委托号",
+          "kind": "text",
+          "initial": "JOB-23"
+        }
+      ],
+      "help": "回看委托所依据的曲线与基准试片；曲线已失效或委托已暂停时，原始读数仍可追溯。",
+      "roles": [
+        "operator",
+        "reviewer",
+        "viewer"
+      ]
     }
   ]
 };

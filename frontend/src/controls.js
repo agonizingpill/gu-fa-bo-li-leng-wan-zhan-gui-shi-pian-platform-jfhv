@@ -35,7 +35,10 @@ export function actionForm(action, refresh) {
     button.disabled = true;
     notice.className = 'status';
     try {
-      const data = await request(action.path, parse(form, action.fields));
+      const payload = parse(form, action.fields);
+      const data = action.method === 'get'
+        ? await request(`${action.path}/${encodeURIComponent(payload[action.keyField])}${action.suffix ?? ''}`)
+        : await request(action.path, payload);
       if (data.token && data.status === 'queued') {
         evidence.save(data.token);
         const result = await awaitCompute(data.token, current => {
@@ -44,7 +47,10 @@ export function actionForm(action, refresh) {
         if (result.status === 'rejected') throw new Error(result.detail);
         notice.textContent = '任务 ' + data.token + ' · ' + display(result.result);
       } else {
-        notice.textContent = action.success + ' · ' + display(data.code ?? data.status);
+        const shown = Array.isArray(data)
+          ? data.length ? data.map(display).join('；') : '暂无记录'
+          : display(data.code ?? data.status ?? data);
+        notice.textContent = (action.success ? action.success + ' · ' : '') + shown;
       }
       notice.classList.add('ok');
       await refresh();
